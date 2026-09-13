@@ -4,534 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan de Clientes - Septiembre 2026</title>
-
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-
         body {
-            margin: 0;
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(135deg, #e8f3ff 0%, #ffffff 48%, #eadbff 100%);
-            color: #222;
-        }
-
-        .contenedor {
-            width: 96%;
-            max-width: 1500px;
-            margin: 20px auto;
-        }
-
-        .encabezado {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .encabezado h1 {
-            margin: 0;
-            font-size: 25px;
-            font-style: italic;
-            font-weight: 700;
-        }
-
-        .encabezado p {
-            margin: 5px 0 0;
-            color: #555;
-        }
-
-        .dashboard {
-            background: rgba(255,255,255,.88);
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 3px 18px rgba(0,0,0,.12);
-        }
-
-        .fila-principal {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 230px;
-            gap: 18px;
-        }
-
-        .panel {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 1px 7px rgba(0,0,0,.10);
-            overflow: hidden;
-        }
-
-        .grafico-panel {
-            min-height: 355px;
-        }
-
-        .panel-titulo {
-            text-align: center;
-            font-weight: 700;
-            font-style: italic;
-            padding: 12px 10px 8px;
-            font-size: 18px;
-        }
-
-        /* Gráfico */
-        .grafico {
-            height: 285px;
-            padding: 10px 28px 25px;
-            position: relative;
-        }
-
-        .eje-y {
-            position: absolute;
-            left: 4px;
-            top: 18px;
-            bottom: 32px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            font-size: 11px;
-            color: #555;
+            min-height: 100vh;
         }
-
-        .zona-grafico {
-            position: relative;
-            height: 235px;
-            margin-left: 30px;
-            border-bottom: 1px solid #aaa;
-            background:
-                linear-gradient(to bottom,
-                    transparent 0,
-                    transparent 49.7%,
-                    #ddd 50%,
-                    transparent 50.3%,
-                    transparent 99.7%,
-                    #ddd 100%);
-        }
-
-        .linea-0,
-        .linea-100,
-        .linea-200 {
-            position: absolute;
-            left: 0;
-            right: 0;
-            border-top: 1px dotted #ccc;
-        }
-
-        .linea-200 { top: 0; }
-        .linea-100 { top: 50%; }
-        .linea-0 { bottom: 0; }
-
-        .grupos {
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 65px;
-        }
-
-        .grupo {
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            gap: 1px;
-            position: relative;
-            padding-bottom: 0;
-        }
-
-        .barra {
-            width: 19px;
-            min-height: 2px;
-            border-radius: 1px 1px 0 0;
-            opacity: .82;
-        }
-
-        .h100 { height: 50%; }
-        .h200 { height: 100%; }
-
-        .c1 { background:#66aef0; }
-        .c2 { background:#263fa5; }
-        .c3 { background:#e85aa7; }
-        .c4 { background:#7a1591; }
-        .c5 { background:#ed713d; }
-        .c6 { background:#7754bf; }
-        .c7 { background:#e1bb17; }
-        .c8 { background:#d94c5d; }
-        .c9 { background:#46a2b9; }
-        .c10 { background:#d4b8bd; }
-
-        .etiqueta-grupo {
-            position: absolute;
-            bottom: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            white-space: nowrap;
-        }
-
-        .leyenda {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 7px 10px;
-            font-size: 12px;
-            padding: 3px 12px 8px;
-        }
-
-        .leyenda span {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .punto {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        /* Filtros */
-        .filtros {
-            padding: 0 10px 12px;
-        }
-
-        .filtro-titulo {
+        header {
+            background-color: #f2c811; /* Color amarillo característico de Power BI */
+            color: #000;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
             font-weight: 600;
-            font-style: italic;
-            margin: 0 0 8px;
         }
-
-        .opcion {
-            background: #a8d3f7;
-            border-radius: 8px;
-            padding: 11px 12px;
-            margin: 7px 0;
-            cursor: pointer;
-            transition: .2s;
-            font-size: 14px;
-        }
-
-        .opcion:hover,
-        .opcion.activo {
-            background: #72b8ef;
-            transform: translateX(2px);
-        }
-
-        .tipo .opcion {
-            background: #f5c1aa;
-        }
-
-        .tipo .opcion:hover,
-        .tipo .opcion.activo {
-            background: #eea989;
-        }
-
-        /* Parte inferior */
-        .inferior {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-top: 18px;
-        }
-
-        .tabla {
-            height: 270px;
-            overflow: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        th {
-            text-align: left;
-            padding: 8px;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            font-style: italic;
-            border-bottom: 1px solid #ddd;
-        }
-
-        td {
-            padding: 6px 8px;
-            border-bottom: 2px solid #d6df35;
-            white-space: nowrap;
-        }
-
-        .barrios {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            padding: 12px;
-            max-height: 250px;
-            overflow: auto;
-        }
-
-        .barrio {
-            background: #f3e29b;
-            border: 1px solid #d4c36c;
-            border-radius: 9px;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        .nota {
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-top: 12px;
-        }
-
-        .powerbi {
-            margin-top: 18px;
-        }
-
-        .powerbi iframe {
-            width: 100%;
-            height: 620px;
-            border: 0;
-            border-radius: 8px;
-        }
-
-        .botones {
+        main {
+            flex: 1;
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
+            align-items: center;
+            padding: 20px;
         }
-
-        button {
-            border: 0;
-            border-radius: 7px;
-            padding: 9px 16px;
-            cursor: pointer;
-            background: #318bd1;
-            color: white;
+        .report-container {
+            width: 100%;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 10px;
         }
-
-        button:hover {
-            background: #176da9;
+        /* Ajuste para que el iframe se adapte bien a pantallas */
+        .report-container iframe {
+            width: 100%;
+            height: 75vh;
+            border: none;
         }
-
-        @media (max-width: 900px) {
-            .fila-principal,
-            .inferior {
-                grid-template-columns: 1fr;
-            }
-
-            .barrios {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 550px) {
-            .barrios {
-                grid-template-columns: 1fr;
-            }
-
-            .grupos {
-                gap: 25px;
-            }
-
-            .barra {
-                width: 12px;
-            }
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #666;
+            background-color: #ffffff;
+            border-top: 1px solid #e1e4e8;
         }
     </style>
 </head>
-
 <body>
 
-<div class="contenedor">
+    <header>
+        <h1>Plan de Clientes Septiembre 2026</h1>
+    </header>
 
-    <div class="encabezado">
-        <h1>PLAN DE CLIENTES SEPTIEMBRE 2026</h1>
-        <p>Clientes por tipo de cliente y nombre de rubro</p>
-    </div>
-
-    <div class="dashboard">
-
-        <div class="fila-principal">
-
-            <section class="panel grafico-panel">
-                <div class="panel-titulo">NroColumnas por TipoCliente y NombreRubro</div>
-
-                <div class="leyenda">
-                    <span><i class="punto c1"></i>Electrónica</span>
-                    <span><i class="punto c2"></i>Farmacia</span>
-                    <span><i class="punto c3"></i>Ferretería</span>
-                    <span><i class="punto c4"></i>Librería</span>
-                    <span><i class="punto c5"></i>Panadería</span>
-                    <span><i class="punto c6"></i>Restaurante</span>
-                    <span><i class="punto c7"></i>Salón de belleza</span>
-                    <span><i class="punto c8"></i>Taller mecánico</span>
-                    <span><i class="punto c9"></i>Tienda de barrio</span>
-                    <span><i class="punto c10"></i>Venta de ropa</span>
-                </div>
-
-                <div class="grafico">
-                    <div class="eje-y">
-                        <span>200 %</span>
-                        <span>100 %</span>
-                        <span>0 %</span>
-                    </div>
-
-                    <div class="zona-grafico">
-                        <div class="linea-200"></div>
-                        <div class="linea-100"></div>
-                        <div class="linea-0"></div>
-
-                        <div class="grupos">
-
-                            <div class="grupo">
-                                <div class="barra c1 h100"></div>
-                                <div class="barra c2 h100"></div>
-                                <div class="barra c3 h100"></div>
-                                <div class="barra c4 h200"></div>
-                                <div class="barra c5 h100"></div>
-                                <div class="barra c6 h200"></div>
-                                <div class="barra c7 h100"></div>
-                                <div class="barra c8 h100"></div>
-                                <div class="barra c9 h200"></div>
-                                <div class="barra c10 h100"></div>
-                                <div class="etiqueta-grupo">Jurídico</div>
-                            </div>
-
-                            <div class="grupo">
-                                <div class="barra c1 h100"></div>
-                                <div class="barra c2 h200"></div>
-                                <div class="barra c3 h200"></div>
-                                <div class="barra c4 h100"></div>
-                                <div class="barra c5 h100"></div>
-                                <div class="barra c6 h100"></div>
-                                <div class="barra c7 h100"></div>
-                                <div class="barra c8 h100"></div>
-                                <div class="barra c9 h100"></div>
-                                <div class="barra c10 h100"></div>
-                                <div class="etiqueta-grupo">Natural</div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <aside class="panel">
-                <div class="panel-titulo">NombreRubro</div>
-                <div class="filtros" id="filtrosRubro">
-                    <div class="opcion activo">Electrónica</div>
-                    <div class="opcion">Farmacia</div>
-                    <div class="opcion">Ferretería</div>
-                    <div class="opcion">Librería</div>
-                    <div class="opcion">Panadería</div>
-                    <div class="opcion">Restaurante</div>
-                    <div class="opcion">Salón de belleza</div>
-                    <div class="opcion">Taller mecánico</div>
-                    <div class="opcion">Tienda de barrio</div>
-                    <div class="opcion">Venta de ropa</div>
-                </div>
-
-                <div class="tipo">
-                    <div class="panel-titulo">TipoCliente</div>
-                    <div class="filtros">
-                        <div class="opcion activo">Jurídico</div>
-                        <div class="opcion">Natural</div>
-                    </div>
-                </div>
-            </aside>
-
+    <main>
+        <div class="report-container">
+            <!-- Tu iframe incrustado -->
+            <iframe title="Clientes General" src="https://app.powerbi.com/reportEmbed?reportId=d3cfd47b-061b-47d8-be53-b16162acc0bd&autoAuth=true&ctid=cf263038-f11c-49d2-9183-556a34b747e2" frameborder="0" allowFullScreen="true"></iframe>
         </div>
+    </main>
 
-        <div class="inferior">
-
-            <section class="panel">
-                <div class="tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>idCliente</th>
-                                <th>NombreCliente</th>
-                                <th>Dirección</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>1</td><td>Comercial Las Palmas S.R.L.</td><td>Av. Las Palmas #125</td></tr>
-                            <tr><td>2</td><td>Centro Educativo Los Angeles S.A.</td><td>Calle Los Angeles #240</td></tr>
-                            <tr><td>3</td><td>Clínica Santa Cruz S.R.L.</td><td>Av. Estación Argentina</td></tr>
-                            <tr><td>4</td><td>Constructora El Pari S.A.</td><td>Calle El Pari #428</td></tr>
-                            <tr><td>5</td><td>Transportes Los Tusequis S.R.L.</td><td>Av. Los Tusequis #512</td></tr>
-                            <tr><td>6</td><td>Importadora Oriente S.R.L.</td><td>Calle Pampa de la Isla #15</td></tr>
-                            <tr><td>7</td><td>Farmacia Vida S.A.</td><td>Av. Villa Primero de Mayo</td></tr>
-                            <tr><td>8</td><td>Distribuidora Santa Cruz S.R.L.</td><td>Calle Plan 3000 #856</td></tr>
-                            <tr><td>9</td><td>Colegio San Martín S.A.</td><td>Av. Pamaoloma #965</td></tr>
-                            <tr><td>10</td><td>Servicios Tecnológicos del Oriente S.R.L.</td><td>Calle El Bajío #1070</td></tr>
-                            <tr><td>11</td><td>Agroindustrial Los Tajibos S.A.</td><td>Av. Banzer #1185</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section class="panel">
-                <div class="panel-titulo">NombreBarrio</div>
-                <div class="barrios">
-                    <div class="barrio">El Bajío</div>
-                    <div class="barrio">El Pari</div>
-                    <div class="barrio">Estación Argentina</div>
-                    <div class="barrio">Las Palmas</div>
-                    <div class="barrio">Los Angeles</div>
-                    <div class="barrio">Los Tusequis</div>
-                    <div class="barrio">Palmasola</div>
-                    <div class="barrio">Pampa de la Isla</div>
-                    <div class="barrio">Plan 3000</div>
-                </div>
-            </section>
-
-        </div>
-
-        <div class="botones">
-            <button onclick="window.print()">Imprimir / Guardar PDF</button>
-            <button onclick="location.reload()">Actualizar</button>
-        </div>
-
-        <div class="nota">
-            Vista HTML inspirada en el panel de Power BI de Clientes General.
-        </div>
-
-    </div>
-
-    <!--
-        Si quieres mostrar directamente tu reporte Power BI,
-        descomenta la sección siguiente.
-    -->
-    <!--
-    <div class="powerbi">
-        <iframe
-            title="Clientes General"
-            src="https://app.powerbi.com/reportEmbed?reportId=d3cfd47b-061b-47d8-be53-b16162acc0bd&autoAuth=true&ctid=cf263038-f11c-49d2-9183-556a34b747e2"
-            frameborder="0"
-            allowfullscreen="true">
-        </iframe>
-    </div>
-    -->
-
-</div>
-
-<script>
-    // Selección visual de filtros
-    document.querySelectorAll('.filtros').forEach(grupo => {
-        grupo.querySelectorAll('.opcion').forEach(opcion => {
-            opcion.addEventListener('click', () => {
-                grupo.querySelectorAll('.opcion').forEach(x => x.classList.remove('activo'));
-                opcion.classList.add('activo');
-            });
-        });
-    });
-</script>
+    <footer>
+        <p>Sistema de Clientes General &copy; 2026 - UPDS</p>
+    </footer>
 
 </body>
 </html>
